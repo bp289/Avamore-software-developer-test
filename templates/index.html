@@ -1,0 +1,36 @@
+<html>
+  <head>
+    <body>
+      <form id="arm_form">
+        <label for="land_advance">Land Advance:</label>
+        <input
+          type="text"
+          name="land_advance"
+          name="land_advance"
+          class="input" />
+        <label for="contractual_monthly_rate">Contractual Monthly Rate:</label>
+        <input
+          type="text"
+          name="contractual_monthly_rate"
+          id="contractual_monthly_rate"
+          class="input" />
+        <label for="beginning_of_default_period"
+          >Beginning of Default Period:</label
+        >
+        <input
+          type="date"
+          name="beginning_of_default_period"
+          id="beginning_of_default_period"
+          class="date-input" />
+        <label for="end_of_default_period">End of default period:</label>
+        <input
+          type="date"
+          name="end_of_default_period"
+          id="end_of_default_period"
+          class="date-input" />
+      </form>
+      <button type="submit" id="submit">Submit</button>
+    </body>
+  </head>
+  <script src="{{ url_for('static', filename='js/index.js') }}"></script>
+</html>
