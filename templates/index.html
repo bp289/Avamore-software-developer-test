@@ -7,6 +7,7 @@
       href="{{ url_for('static', filename='css/styles.css') }}" />
   </head>
   <body>
+    <h1>Redemption Model Calculator</h1>
     <div class="page-container">
       <div class="form-container">
         <form id="arm-form" class="arm-form" action="">
@@ -21,6 +22,8 @@
             name="land-advance"
             id="land-advance"
             min="0"
+            step="0.01"
+            value="100000"
             required />
           <label
             for="contractual-monthly-rate"
@@ -33,6 +36,7 @@
             id="contractual-monthly-rate"
             min="0"
             max="100"
+            value="0.8"
             step="0.01"
             required />
           <label
@@ -53,11 +57,16 @@
             name="end-of-default-period"
             id="end-of-default-period"
             class="date-input" />
-          <button type="submit" id="submit">submit</button>
+          <button type="submit" id="submit">Calculate</button>
         </form>
       </div>
 
-      <!-- <div class="output"></div> -->
+      <div class="output-container" id="output-container">
+        <div class="total-interest" id="total-interest">
+          <p>Total Interest</p>
+          <p id="interest"></p>
+        </div>
+      </div>
     </div>
   </body>
 

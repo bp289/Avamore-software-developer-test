@@ -4,6 +4,9 @@ import mimetypes
 mimetypes.add_type('application/javascript', '.js')
 mimetypes.add_type('text/css', '.css')
 
+from ARM import ARM_calculations
+
+
 DAYS_IN_MONTH = 30
 ARRANGEMENT_FEE = 5000
 INTEREST_RETENTION = 20000
@@ -38,7 +41,16 @@ def home():
 @app.route("/ARMresult", methods =['POST'])
 def ARM_result():
    data = request.json
-   return jsonify({ "data": "success" })
+
+   if data['input'] is not None:
+    data = data['input']
+
+   return jsonify( ARM_calculations(
+        float(data['land-advance']), 
+        float(data['contractual-monthly-rate']),
+        data['beginning-of-default-period'], 
+        data['end-of-default-period'])
+    )
 
  
 

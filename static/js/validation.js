@@ -1,4 +1,5 @@
 export function applyErrorAttribute(id, msg) {
+  // adding error attributes to apply css later
   const field = document.getElementById(id);
   const fieldLabel = document.getElementById(id + "-label");
   const labelAttribute = document.createAttribute("data-error");
@@ -26,6 +27,7 @@ export const validation = {
 
     return valid;
   },
+
   validateMonthlyRate: (monthRate) => {
     let valid = true;
     if (isNaN(monthRate) || monthRate === "") {
@@ -55,7 +57,7 @@ export const validation = {
       valid = false;
     }
 
-    if (date !== "" && date !== "" && new Date(date1) > new Date(date2)) {
+    if (date1 !== "" && date2 !== "" && new Date(date1) > new Date(date2)) {
       const message =
         "Beginning of default period must be before the end of default period";
       applyErrorAttribute("beginning-of-default-period", message);
@@ -66,3 +68,15 @@ export const validation = {
     return valid;
   },
 };
+
+export function validInputs(input) {
+  const validInputs = [
+    validation.validateLandAdvance(input.get("land-advance")),
+    validation.validateMonthlyRate(input.get("contractual-monthly-rate")),
+    validation.validateDates(
+      input.get("beginning-of-default-period"),
+      input.get("end-of-default-period")
+    ),
+  ];
+  return validInputs.every((input) => input === true);
+}
