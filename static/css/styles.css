@@ -94,6 +94,8 @@ input[has-error] {
 
 .output-container {
   display: flex;
+  flex-direction: row;
+  justify-content: space-evenly;
   opacity: 0;
   height: 0;
   width: 1000px;
@@ -107,9 +109,8 @@ input[has-error] {
 .output {
   display: flex;
   align-items: center;
-  justify-content: space-between;
   opacity: 1;
-  width: 500px;
+  max-width: 80%;
   transition: all 0.5s ease-in-out;
   height: 100px;
   > p {
@@ -119,23 +120,27 @@ input[has-error] {
     height: 30px;
     padding: 10px;
     border: 1px solid rgb(24, 156, 205);
-    font-size: 18px;
 
     &:first-child {
+      width: 80px;
       justify-content: flex-start;
-      width: 60%;
-      font-size: 15px;
+      font-size: 13px;
+      overflow-wrap: break-word;
       margin: 0;
       background-color: rgb(24, 156, 205);
       color: white;
     }
 
     &:last-child {
-      justify-content: flex-end;
-      width: 60%;
+      scrollbar-width: thin; /* Firefox */
+      white-space: nowrap;
+      text-overflow: clip;
+      overflow-x: scroll;
+      overflow-y: hidden;
       margin: 0;
       margin-right: 20px;
       font-weight: 200;
+      width: 100px;
     }
   }
 }
