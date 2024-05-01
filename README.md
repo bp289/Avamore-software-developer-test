@@ -1,3 +1,7 @@
+### Deployment URL:
+
+https://avamore-software-developer-test-4fqmcyft1.vercel.app/
+
 ### This repository contains 3 things:
 
 1. A python script for running the ARM redemption model algorithm, called `arm_script.py`
@@ -14,7 +18,7 @@
 - To avoid compatibility issues, a `venv` should be used:
   - Run the command `python3 -m venv .venv`
   - Then run the command `.venv\Scripts\activate`, you should be now in a virtual environment with a fresh python environment.
-- Install requirements on the requirements.txt with `pip install -r requirements.txt`.
+- Install requirements from the requirements.txt file with `pip install -r requirements.txt`.
 
 ## Testing the python script:
 
@@ -22,4 +26,6 @@
 
 ## Running the server and frontend locally.
 
-- To start the server use `flask --app server run` in your terminal, visiting `http://127.0.0.1:5000/` in your browser gives you access to the website in development mode.
+- To start the server use `flask --app app run` in your terminal, visiting `http://127.0.0.1:5000/` in your browser gives you access to the website in development mode.
+
+Dep

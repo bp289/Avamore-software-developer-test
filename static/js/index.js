@@ -5,7 +5,6 @@ const URL = "/ARMresult";
 // event listeners to interact with inputs and
 document.getElementById("submit").addEventListener("click", (event) => {
   event.preventDefault();
-
   submitData();
 });
 
@@ -14,6 +13,11 @@ document.querySelectorAll("input").forEach((input) =>
     removeAttributes(event.target);
   })
 );
+
+document.getElementById("reset").addEventListener("click", (event) => {
+  event.preventDefault();
+  clearFields();
+});
 
 document.querySelectorAll("input").forEach((input) =>
   input.addEventListener("keypress", (event) => {
@@ -46,11 +50,7 @@ function paintResult({
     "regular-annual-rate-value"
   ).textContent = `${implied_regular_annual_rate} %`;
 
-  const output = document.querySelectorAll(".output");
-  console.log(output);
-  const outputContainer = document.getElementById("output-container");
-  outputContainer.classList.add("expand");
-  output.forEach((node) => node.classList.add("visible"));
+  showFields();
 }
 
 //querying and running python script with inputs
@@ -73,4 +73,26 @@ async function getARMresult(input) {
   const result = await response.json();
 
   paintResult(result);
+}
+
+function clearFields() {
+  const inputs = document.querySelectorAll("input, textarea");
+  inputs.forEach((input) => {
+    input.value = "";
+  });
+  hideFields();
+}
+
+function hideFields() {
+  const output = document.querySelectorAll(".output");
+  const outputContainer = document.getElementById("output-container");
+  outputContainer.classList.remove("expand");
+  output.forEach((node) => node.classList.remove("visible"));
+}
+
+function showFields() {
+  const output = document.querySelectorAll(".output");
+  const outputContainer = document.getElementById("output-container");
+  outputContainer.classList.add("expand");
+  output.forEach((node) => node.classList.add("visible"));
 }
