@@ -27,5 +27,3 @@ https://avamore-software-developer-test-4fqmcyft1.vercel.app/
 ## Running the server and frontend locally.
 
 - To start the server use `flask --app app run` in your terminal, visiting `http://127.0.0.1:5000/` in your browser gives you access to the website in development mode.
-
-Dep
