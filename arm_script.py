@@ -206,11 +206,10 @@ if __name__ == '__main__':
        contractual_monthly_rate, 
        default_period_start, 
        default_period_end)
-   
    print(f"total_interest_due: {output["total_interest_due"]}")
-   print(      f"implied_default_rate: {output["implied_daily_default_rate"]} ")
-   print(     f"implied_regular_rate : {output["implied_daily_regular_rate"]}")
-   print(     f"implied_regular_annual_rate: {output["implied_regular_annual_rate"]}")
+   print(f"implied_daily_default_rate: {output["implied_daily_default_rate"]} ")
+   print(f"implied_daily_regular_rate: {output["implied_daily_regular_rate"]}")
+   print(f"implied_regular_annual_rate: {output["implied_regular_annual_rate"]}")
    
 
     

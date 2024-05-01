@@ -27,13 +27,30 @@ function removeAttributes(target) {
   document.getElementById(target.id + "-label").removeAttribute("data-error");
 }
 
-function paintResult({ total_interest_due, daily_data }) {
-  document.getElementById("interest").textContent = `${total_interest_due}`;
+function paintResult({
+  total_interest_due,
+  implied_daily_default_rate,
+  implied_daily_regular_rate,
+  implied_regular_annual_rate,
+}) {
+  document.getElementById(
+    "interest-value"
+  ).textContent = `${total_interest_due}`;
+  document.getElementById(
+    "daily-default-rate-value"
+  ).textContent = `${implied_daily_default_rate}`;
+  document.getElementById(
+    "daily-regular-rate-value"
+  ).textContent = `${implied_daily_regular_rate}`;
+  document.getElementById(
+    "regular-annual-rate-value"
+  ).textContent = `${implied_regular_annual_rate}`;
 
-  const output = document.getElementById("total-interest");
+  const output = document.querySelectorAll(".output");
+  console.log(output);
   const outputContainer = document.getElementById("output-container");
-  outputContainer.classList.add("visible");
-  output.classList.add("visible");
+  outputContainer.classList.add("expand");
+  output.forEach((node) => node.classList.add("visible"));
 }
 
 //querying and running python script with inputs
