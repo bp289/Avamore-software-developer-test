@@ -9,16 +9,24 @@
   <body>
     <div class="page-container">
       <div class="form-container">
-        <form id="arm-form" class="arm-form">
-          <label class="floating-label" for="land-advance">Land Advance</label>
+        <form id="arm-form" class="arm-form" action="">
+          <label
+            class="floating-label"
+            for="land-advance"
+            id="land-advance-label"
+            >Land Advance</label
+          >
           <input
             type="number"
             name="land-advance"
             id="land-advance"
-            class="input-num"
             min="0"
             required />
-          <label for="contractual-monthly-rate">Contractual Monthly Rate</label>
+          <label
+            for="contractual-monthly-rate"
+            id="contractual-monthly-rate-label"
+            >Contractual Monthly Rate</label
+          >
           <input
             type="number"
             name="contractual-monthly-rate"
@@ -26,9 +34,10 @@
             min="0"
             max="100"
             step="0.01"
-            class="input-num"
             required />
-          <label for="beginning-of-default-period">
+          <label
+            for="beginning-of-default-period"
+            id="beginning-of-default-period-label">
             Beginning of default period
           </label>
           <input
@@ -36,13 +45,14 @@
             name="beginning-of-default-period"
             id="beginning-of-default-period"
             class="date-input" />
-          <label for="end-of-default-period">End of default period</label>
+          <label for="end-of-default-period" id="end-of-default-period-label"
+            >End of default period</label
+          >
           <input
             type="date"
             name="end-of-default-period"
             id="end-of-default-period"
             class="date-input" />
-
           <button type="submit" id="submit">submit</button>
         </form>
       </div>

@@ -1,4 +1,4 @@
-import validation from "./validation.js";
+import { validation, applyErrorAttribute } from "./validation.js";
 
 const URL = "/ARMresult";
 
@@ -6,16 +6,20 @@ const URL = "/ARMresult";
 
 async function submitData() {
   const input = new FormData(document.getElementById("arm-form"));
-  console.log(input);
-  validation.validateLandAdvance(input.get("land-advance"));
 
-  validation.validateMonthlyRate(input.get("contractual-monthly-rate"));
-  validation.validateDates(
-    input.get("beginning-of-default-period"),
-    input.get("end-of-default-period")
-  );
+  const validInputs = [
+    validation.validateLandAdvance(input.get("land-advance")),
+    validation.validateMonthlyRate(input.get("contractual-monthly-rate")),
+    validation.validateDates(
+      input.get("beginning-of-default-period"),
+      input.get("end-of-default-period")
+    ),
+  ];
 
-  //const result = await getARMresult(input);
+  if (validInputs.every((input) => input === true)) {
+    console.log("all values valid");
+    const result = await getARMresult(input);
+  }
 }
 
 async function getARMresult(input) {
@@ -31,7 +35,22 @@ async function getARMresult(input) {
 
 // Add an event listener to the submit button
 document.getElementById("submit").addEventListener("click", (event) => {
-  event.preventDefault();
-
   submitData();
 });
+
+document.querySelectorAll("input").forEach((input) =>
+  input.addEventListener("change", (event) => {
+    removeAttributes(event.target);
+  })
+);
+
+document.querySelectorAll("input").forEach((input) =>
+  input.addEventListener("keypress", (event) => {
+    removeAttributes(event.target);
+  })
+);
+
+function removeAttributes(target) {
+  target.removeAttribute("has-error");
+  document.getElementById(target.id + "-label").removeAttribute("data-error");
+}
