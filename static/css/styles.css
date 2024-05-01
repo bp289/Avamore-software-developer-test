@@ -8,14 +8,31 @@ body {
   background-color: #f4f4f4;
 }
 
+.page-container {
+  width: 800px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
 .arm-form {
-  width: 400px;
+  width: 300px;
+  padding: 50px;
+
+  background-color: white;
+  border-radius: 8px;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+}
+
+/* .output {
+  display: none;
+  width: 100px;
   padding: 50px;
   padding-right: 200px;
   background-color: white;
   border-radius: 8px;
   box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-}
+} */
 
 .form-container {
   background-color: #f4f4f4;
@@ -23,7 +40,7 @@ body {
 
 form input[type="number"],
 form input[type="date"] {
-  width: 50%;
+  width: 80%;
   height: 40px;
   margin-bottom: 20px;
   margin-top: 5px;
@@ -51,7 +68,6 @@ button {
   padding: 0 8px;
   border: 1px solid #ddd;
   border-radius: 10px;
-
   font-size: 18px;
   cursor: pointer;
   font-family: "Roboto Mono", monospace;

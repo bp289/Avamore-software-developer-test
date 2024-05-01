@@ -1,5 +1,9 @@
 from flask import Flask, render_template, request, jsonify
 
+import mimetypes
+mimetypes.add_type('application/javascript', '.js')
+mimetypes.add_type('text/css', '.css')
+
 DAYS_IN_MONTH = 30
 ARRANGEMENT_FEE = 5000
 INTEREST_RETENTION = 20000
