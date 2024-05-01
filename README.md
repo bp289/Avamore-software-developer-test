@@ -1,6 +1,4 @@
-### Deployment URL:
-
-https://avamore-software-developer-test-4fqmcyft1.vercel.app/
+### [Visit here](https://avamore-software-developer-test.vercel.app/)
 
 ### This repository contains 3 things:
 
