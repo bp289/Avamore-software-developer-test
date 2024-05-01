@@ -1,5 +1,6 @@
 from flask import Flask, render_template, request, jsonify
 from arm_script import ARM_calculations
+from decimal import Decimal
 import mimetypes
 mimetypes.add_type('application/javascript', '.js')
 mimetypes.add_type('text/css', '.css')
@@ -17,12 +18,12 @@ def ARM_result():
    if data['input'] is not None:
     data = data['input']
 
-   return jsonify( ARM_calculations(
-        float(data['land-advance']), 
-        float(data['contractual-monthly-rate']),
+    result = ARM_calculations(
+        Decimal(data['land-advance']), 
+        Decimal(data['contractual-monthly-rate']),
         data['beginning-of-default-period'], 
         data['end-of-default-period'])
-    )
+   return jsonify( result )
 
 
 

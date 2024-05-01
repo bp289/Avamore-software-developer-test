@@ -1,5 +1,5 @@
 from datetime import datetime, timedelta
-
+from decimal import Decimal, ROUND_HALF_UP
 #constants
 DATE_FORMAT = '%Y-%m-%d'
 DAYS_IN_MONTH = 30
@@ -27,7 +27,7 @@ CAPITAL_REPAYMENTS = {
 
 
 #helper
-calculate_annual_rate = lambda daily: (((1 + daily) ** 365) - 1) * 100
+calculate_annual_rate = lambda daily: (((1 + Decimal(daily)) ** 365) - 1) * 100
 def get_daily_interest(
     opening_PB, 
     draw_down,
@@ -98,17 +98,23 @@ def calculate_next_values( contractual_monthly_rate, previous_values, default_st
 
     return result_dict
 
+#custom round to handle larger numbers
+def custom_round(input_num, decimal_places):
+        try:
+            rounded = round(input_num, decimal_places)
+            return rounded
+        except:
+           return input_num
+
 def ARM_calculations(
     land_advance,
     contractual_monthly_rate,
     default_period_start,
     default_period_end
 ):
-    implied_daily_regular_rate = round(((contractual_monthly_rate/100)/ DAYS_IN_MONTH) * 100, 2)
-    implied_daily_default_rate = round(((DEFAULT_RATE/100) / DAYS_IN_MONTH) * 100, 2)
-    implied_regular_annual_rate = round(calculate_annual_rate((contractual_monthly_rate/100)/ DAYS_IN_MONTH), 1)
-   
-
+    implied_daily_regular_rate = ((contractual_monthly_rate/100)/ DAYS_IN_MONTH) * 100
+    implied_daily_default_rate = ((DEFAULT_RATE/100) / DAYS_IN_MONTH) * 100
+    implied_regular_annual_rate = calculate_annual_rate((contractual_monthly_rate/100)/ DAYS_IN_MONTH)
 
     default_start_DT = datetime.strptime(default_period_start , DATE_FORMAT)
     default_end_DT = datetime.strptime(default_period_end , DATE_FORMAT)
@@ -132,18 +138,25 @@ def ARM_calculations(
         )
         total_interest_due = max(total_interest_due, current_values['accrued_daily_interest'])
     
+    # print({
+    #     'total_interest_due': custom_round(total_interest_due, 2), 
+    #     'daily_data': table , 
+    #     "implied_daily_default_rate": custom_round(implied_daily_default_rate), 
+    #     "implied_daily_regular_rate": custom_round(implied_daily_regular_rate),
+    #     "implied_regular_annual_rate": custom_round(implied_regular_annual_rate)
+    # })
     return {
-        'total_interest_due': round(total_interest_due, 2), 
+        'total_interest_due': custom_round(total_interest_due, 2), 
         'daily_data': table , 
-        "implied_daily_default_rate": implied_daily_default_rate, 
-        "implied_daily_regular_rate": implied_daily_regular_rate,
-        "implied_regular_annual_rate": implied_regular_annual_rate
+        "implied_daily_default_rate": custom_round(implied_daily_default_rate,2), 
+        "implied_daily_regular_rate": custom_round(implied_daily_regular_rate,2),
+        "implied_regular_annual_rate": custom_round(implied_regular_annual_rate,2)
     }
 
 # input validations:
 def validate_positive_float(inputVal):
         try:
-            float_val = float(inputVal)
+            float_val = Decimal(inputVal)
             if float_val > 0:
                 return float_val
             else:
@@ -202,10 +215,10 @@ def validate_inputs():
 if __name__ == '__main__':
    land_advance, contractual_monthly_rate, default_period_start, default_period_end = validate_inputs()
    output =ARM_calculations(
-       land_advance, 
-       contractual_monthly_rate, 
+       Decimal(land_advance), 
+       Decimal(contractual_monthly_rate), 
        default_period_start, 
-       default_period_end)
+       default_period_end,)
    print(f"total_interest_due: {output["total_interest_due"]}")
    print(f"implied_daily_default_rate: {output["implied_daily_default_rate"]} ")
    print(f"implied_daily_regular_rate: {output["implied_daily_regular_rate"]}")

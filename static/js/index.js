@@ -38,13 +38,13 @@ function paintResult({
   ).textContent = `${total_interest_due}`;
   document.getElementById(
     "daily-default-rate-value"
-  ).textContent = `${implied_daily_default_rate}`;
+  ).textContent = `${implied_daily_default_rate} %`;
   document.getElementById(
     "daily-regular-rate-value"
-  ).textContent = `${implied_daily_regular_rate}`;
+  ).textContent = `${implied_daily_regular_rate} %`;
   document.getElementById(
     "regular-annual-rate-value"
-  ).textContent = `${implied_regular_annual_rate}`;
+  ).textContent = `${implied_regular_annual_rate} %`;
 
   const output = document.querySelectorAll(".output");
   console.log(output);
