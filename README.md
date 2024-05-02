@@ -11,14 +11,15 @@
 ## Testing/running locally
 
 ### Install dependencies:
-- Open a new terminal in the root of this project:
-- To avoid compatibility issues, a `venv` should be used:
-  - Run the command `python3 -m venv .venv`
-  - Then run the command `.venv\Scripts\activate`, you should now be in a virtual environment with a fresh Python environment.
+- Open a new terminal in the root of this project
+- To avoid compatibility issues, a `venv` should be used
+   - Run the command `python3 -m venv .venv`
+  - Then run the command `.venv\Scripts\activate`, you should now be in a virtual environment with a fresh Python environment.
+  
 - Install requirements from the requirements.txt file with `pip install -r requirements.txt`.
 
 ### Running the python script:
 - Run the `arm_script.py` file using `python .\arm_script.py` from the root directory file which will ask you for inputs in the terminal.
 
-### Running the server and web interface locally.
+### Running the server and web interface locally:
 - To start the server use `flask --app app run` in your terminal from the root director. Opening `http://127.0.0.1:5000/` in your browser gives you access to the website in development mode.
