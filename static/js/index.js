@@ -25,7 +25,7 @@ document.querySelectorAll("input").forEach((input) =>
   })
 );
 
-//dom interaction
+//document interaction functions
 function removeAttributes(target) {
   target.removeAttribute("has-error");
   document.getElementById(target.id + "-label").removeAttribute("data-error");
@@ -50,7 +50,7 @@ function paintResult({
     "regular-annual-rate-value"
   ).textContent = `${implied_regular_annual_rate} %`;
 
-  showFields();
+  showOutputs();
 }
 
 //querying and running python script with inputs
@@ -80,17 +80,21 @@ function clearFields() {
   inputs.forEach((input) => {
     input.value = "";
   });
-  hideFields();
+  hideOutputs();
+
+  document
+    .querySelectorAll("input")
+    .forEach((input) => removeAttributes(input));
 }
 
-function hideFields() {
+function hideOutputs() {
   const output = document.querySelectorAll(".output");
   const outputContainer = document.getElementById("output-container");
   outputContainer.classList.remove("expand");
   output.forEach((node) => node.classList.remove("visible"));
 }
 
-function showFields() {
+function showOutputs() {
   const output = document.querySelectorAll(".output");
   const outputContainer = document.getElementById("output-container");
   outputContainer.classList.add("expand");

@@ -28,8 +28,18 @@ CAPITAL_REPAYMENTS = {
 }
 
 
-#helper
+#helpers
 calculate_annual_rate = lambda daily: (((1 + Decimal(daily)) ** 365) - 1) * 100
+
+
+#custom round to handle larger numbers, as sometimes there can be an overflow.
+def custom_round(input_num, decimal_places):
+        try:
+            rounded = round(input_num, decimal_places)
+            return rounded
+        except:
+           return input_num
+        
 def get_daily_interest(
     opening_PB, 
     draw_down,
@@ -38,9 +48,6 @@ def get_daily_interest(
     contractual_monthly_rate
 ):
     result = opening_PB + draw_down + interest_balance
-
-    print("calculation", default_on,(contractual_monthly_rate/100) / DAYS_IN_MONTH)
-    print("calculation",result * (contractual_monthly_rate/100) / DAYS_IN_MONTH)
     if default_on:
         return result * ((DEFAULT_RATE/ 100)/ DAYS_IN_MONTH )
     else:
@@ -69,8 +76,6 @@ def calculate_initial_values(land_advance, contractual_monthly_rate, default_sta
     result_dict['closing_PB'] =  (result_dict['opening_PB'] + result_dict['draw_down']) - result_dict['payments_received']
     result_dict['accrued_daily_interest'] = result_dict['daily_interest']
 
-    print(result_dict['accrued_daily_interest'], result_dict['daily_interest'])
-
     return result_dict
 
 def calculate_next_values( contractual_monthly_rate, previous_values, default_start, default_end):
@@ -84,9 +89,6 @@ def calculate_next_values( contractual_monthly_rate, previous_values, default_st
         'draw_down': BUILD_DRAW_DOWNS.get(cur_date_str, 0),
         'payments_received': CAPITAL_REPAYMENTS.get( cur_date_str, 0),
     }
-
-    
-
     
     result_dict['closing_PB'] =  (result_dict['opening_PB'] + result_dict['draw_down']) - result_dict['payments_received']
    
@@ -98,62 +100,11 @@ def calculate_next_values( contractual_monthly_rate, previous_values, default_st
        contractual_monthly_rate
     )
 
-
     result_dict['closing_PB'] =  (result_dict['opening_PB'] + result_dict['draw_down']) - result_dict['payments_received']
     result_dict['daily_interest'] = daily_interest
     result_dict['accrued_daily_interest'] =  previous_values['accrued_daily_interest'] +  daily_interest
 
-
-    print(cur_date_str, result_dict['daily_interest'])
     return result_dict
-
-#custom round to handle larger numbers, as sometimes there can be an overflow.
-def custom_round(input_num, decimal_places):
-        try:
-            rounded = round(input_num, decimal_places)
-            return rounded
-        except:
-           return input_num
-
-def ARM_calculations(
-    land_advance=100000,
-    contractual_monthly_rate=0.8,
-    default_period_start="2024-03-24",
-    default_period_end="2024-04-23"
-):
-    implied_daily_regular_rate = ((contractual_monthly_rate/100)/ DAYS_IN_MONTH) * 100
-    implied_daily_default_rate = ((DEFAULT_RATE/100) / DAYS_IN_MONTH) * 100
-    implied_regular_annual_rate = calculate_annual_rate((contractual_monthly_rate/100)/ DAYS_IN_MONTH)
-
-    default_start_DT = datetime.strptime(default_period_start , DATE_FORMAT)
-    default_end_DT = datetime.strptime(default_period_end , DATE_FORMAT)
-
-    current_values = calculate_initial_values(
-        land_advance,
-        contractual_monthly_rate,
-        default_start_DT, 
-        default_end_DT 
-    )
-    
-    total_interest_due = current_values['accrued_daily_interest']
-    
-    table = [current_values]
-    while datetime.strptime(current_values['date'],  DATE_FORMAT) < REDEMPTION_STATEMENT_DATE:
-        current_values = calculate_next_values(
-            contractual_monthly_rate,
-            current_values,  
-            default_start_DT, 
-            default_end_DT
-        )
-        total_interest_due = max(total_interest_due, current_values['accrued_daily_interest'])
-    
-    return {
-        'total_interest_due': custom_round(total_interest_due, 2), 
-        'daily_data': table , 
-        "implied_daily_default_rate": custom_round(implied_daily_default_rate,2), 
-        "implied_daily_regular_rate": custom_round(implied_daily_regular_rate,2),
-        "implied_regular_annual_rate": custom_round(implied_regular_annual_rate,2)
-    }
 
 # input validations:
 def validate_positive_float(inputVal):
@@ -214,6 +165,47 @@ def validate_inputs():
 
     return(land_advance, contractual_monthly_rate, default_period_start, default_period_end)
 
+#main function here
+def ARM_calculations(
+    land_advance=100000,
+    contractual_monthly_rate=0.8,
+    default_period_start="2024-03-24",
+    default_period_end="2024-04-23"
+):
+    implied_daily_regular_rate = ((contractual_monthly_rate/100)/ DAYS_IN_MONTH) * 100
+    implied_daily_default_rate = ((DEFAULT_RATE/100) / DAYS_IN_MONTH) * 100
+    implied_regular_annual_rate = calculate_annual_rate((contractual_monthly_rate/100)/ DAYS_IN_MONTH)
+
+    default_start_DT = datetime.strptime(default_period_start , DATE_FORMAT)
+    default_end_DT = datetime.strptime(default_period_end , DATE_FORMAT)
+
+    current_values = calculate_initial_values(
+        land_advance,
+        contractual_monthly_rate,
+        default_start_DT, 
+        default_end_DT 
+    )
+    
+    total_interest_due = current_values['accrued_daily_interest']
+    
+    table = [current_values]
+    while datetime.strptime(current_values['date'],  DATE_FORMAT) < REDEMPTION_STATEMENT_DATE:
+        current_values = calculate_next_values(
+            contractual_monthly_rate,
+            current_values,  
+            default_start_DT, 
+            default_end_DT
+        )
+        total_interest_due = max(total_interest_due, current_values['accrued_daily_interest'])
+    
+    return {
+        'total_interest_due': custom_round(total_interest_due, 2), 
+        'daily_data': table , 
+        "implied_daily_default_rate": custom_round(implied_daily_default_rate,2), 
+        "implied_daily_regular_rate": custom_round(implied_daily_regular_rate,2),
+        "implied_regular_annual_rate": custom_round(implied_regular_annual_rate,2)
+    }
+
 if __name__ == '__main__':
     
    land_advance, contractual_monthly_rate, default_period_start, default_period_end = validate_inputs()
@@ -226,6 +218,5 @@ if __name__ == '__main__':
    print(f"implied_daily_default_rate: {output["implied_daily_default_rate"]} ")
    print(f"implied_daily_regular_rate: {output["implied_daily_regular_rate"]}")
    print(f"implied_regular_annual_rate: {output["implied_regular_annual_rate"]}")
-   
 
     

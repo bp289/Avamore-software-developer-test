@@ -226,5 +226,15 @@ button {
 
   .output {
     width: 100%;
+    justify-content: center;
+    margin: auto;
+    > p {
+      &:first-child {
+        width: 40%px;
+      }
+      &:last-child {
+        width: 60%;
+      }
+    }
   }
 }
