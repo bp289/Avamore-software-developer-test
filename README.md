@@ -1,12 +1,12 @@
 ### [Visit website here](https://avamore-software-developer-test.vercel.app/)
 
 ## This repository contains 3 things:
-#### 1. A Python script for running the ARM redemption model algorithm, called `arm_script.py`
-#### 2. A Python-flask server implementation for running the ARM template script called `app.py`
+#### 1. A Python script for running the ARM redemption model algorithm, called `arm_script.py` (root folder).
+#### 2. A Python-flask server implementation for running the ARM template script called `app.py` (root folder).
    - Flask is being used to serve the script to a web interface so that we can pass data to a browser.
 #### 4. A web interface using JavaScript, HTML, and CSS to call this script
    - The `templates` folder contains the HTML file.
-   - In the'static` folder, you can find the CSS and JavaScript files.
+   - In the `static` folder, you can find the CSS and JavaScript files.
 
 ## Testing/running locally
 
