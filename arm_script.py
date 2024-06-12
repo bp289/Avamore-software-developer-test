@@ -30,7 +30,7 @@ CAPITAL_REPAYMENTS = {
 #example change
 #helpers
 calculate_annual_rate = lambda daily: (((1 + Decimal(daily)) ** 365) - 1) * 100
-
+#fasdfds
 
 #custom round to handle larger numbers, as sometimes there can be an overflow.
 def custom_round(input_num, decimal_places):
