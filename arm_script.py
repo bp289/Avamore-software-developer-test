@@ -27,7 +27,7 @@ CAPITAL_REPAYMENTS = {
     "2024-02-23": Decimal(100000)
 }
 
-
+#example change
 #helpers
 calculate_annual_rate = lambda daily: (((1 + Decimal(daily)) ** 365) - 1) * 100
 
