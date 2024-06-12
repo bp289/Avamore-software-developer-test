@@ -1,6 +1,5 @@
 ### [Visit website here](https://avamore-software-developer-test.vercel.app/)
 
-## fsdfa
 ## This repository contains 3 things:
 #### 1. A Python script for running the ARM redemption model algorithm, called `arm_script.py` (root folder).
 #### 2. A Python-flask server implementation for running the ARM template script called `app.py` (root folder).
